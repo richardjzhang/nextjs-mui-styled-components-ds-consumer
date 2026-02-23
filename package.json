@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "echo \"@richardjzhang:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=${GITHUB_PKG_TOKEN}\" > .npmrc",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
