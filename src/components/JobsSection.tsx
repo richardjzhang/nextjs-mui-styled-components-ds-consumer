@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import {
-  Button,
+  SectionHeader,
   DataTable,
   Badge,
+  Button,
   Divider,
   TextInput,
   ConfirmDialog,
+  Avatar,
 } from "@richardjzhang/design-system";
 
 interface Role {
@@ -28,6 +29,15 @@ const SAMPLE_ROLES: Role[] = [
   { title: "Growth Marketer", team: "Core", location: "Sydney", type: "Full-time" },
 ];
 
+const TEAM_MEMBERS = [
+  { name: "Toby Norton-Smith", role: "CEO" },
+  { name: "Georgia Harper", role: "COO" },
+  { name: "James Chen", role: "CTO" },
+  { name: "Sarah Mitchell", role: "Head of Ventures" },
+  { name: "David Park", role: "Head of Investments" },
+  { name: "Priya Sharma", role: "Head of Product" },
+];
+
 export default function JobsSection() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
@@ -44,51 +54,84 @@ export default function JobsSection() {
       component="section"
       id="jobs"
       sx={{
-        bgcolor: "#1a1a1a",
+        bgcolor: "#1A1D23",
         py: { xs: 8, md: 12 },
-        px: { xs: 3, md: 8 },
+        px: { xs: 3, md: 6 },
         color: "#FFFFFF",
       }}
     >
       <Box sx={{ maxWidth: 1200, mx: "auto" }}>
-        <Typography
-          variant="h3"
-          sx={{
-            fontSize: { xs: "1.75rem", md: "2.5rem" },
-            fontWeight: 400,
-            mb: 2,
-            color: "#FFFFFF",
-          }}
-        >
-          Join our team
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: "1.1rem",
-            color: "rgba(255,255,255,0.55)",
-            mb: 6,
-            maxWidth: 600,
-            lineHeight: 1.6,
-          }}
-        >
-          {"We're always looking for talented people to help us build the future of banking. Explore open roles across our venture and core teams."}
-        </Typography>
+        <SectionHeader
+          eyebrow="careers"
+          title="Join our team"
+          subtitle="We're always looking for talented people to help us build the future of banking."
+          variant="dark"
+        />
+
+        {/* Leadership team preview with Avatars */}
+        <Box sx={{ mt: 5, mb: 6 }}>
+          <Divider label="Leadership" spacing="md" />
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" },
+              gap: 2,
+              mt: 3,
+            }}
+          >
+            {TEAM_MEMBERS.map((member) => (
+              <Box
+                key={member.name}
+                sx={{ display: "flex", alignItems: "center", gap: 1.5, py: 1 }}
+              >
+                <Avatar name={member.name} size="sm" />
+                <Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      display: "block",
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
+                      color: "#FFFFFF",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {member.name}
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      display: "block",
+                      fontSize: "0.75rem",
+                      color: "#7B8FA1",
+                    }}
+                  >
+                    {member.role}
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        <Divider label="Open Roles" spacing="lg" />
 
         {/* Roles DataTable */}
         <Box
           sx={{
+            mt: 4,
             mb: 5,
             "& .MuiPaper-root": {
-              bgcolor: "#222",
-              borderColor: "rgba(255,255,255,0.1)",
+              bgcolor: "#2B3039",
+              borderColor: "#3E444E",
             },
             "& .MuiTableCell-root": {
               color: "rgba(255,255,255,0.8)",
-              borderBottomColor: "rgba(255,255,255,0.08)",
+              borderBottomColor: "#3E444E",
             },
             "& .MuiTableCell-head": {
-              bgcolor: "#2a2a2a",
-              color: "rgba(255,255,255,0.5)",
+              bgcolor: "#343A44",
+              color: "#7B8FA1",
               fontWeight: 700,
             },
             "& .MuiTableRow-root:hover": {
@@ -99,17 +142,25 @@ export default function JobsSection() {
           <DataTable<Record<string, unknown>>
             columns={[
               { key: "title", label: "Role" },
-              { key: "team", label: "Team", render: (val) => (
-                <Badge variant={val === "Ventures" ? "info" : "default"}>
-                  {String(val)}
-                </Badge>
-              )},
+              {
+                key: "team",
+                label: "Team",
+                render: (val) => (
+                  <Badge variant={val === "Ventures" ? "info" : "default"}>
+                    {String(val)}
+                  </Badge>
+                ),
+              },
               { key: "location", label: "Location" },
-              { key: "type", label: "Type", render: (val) => (
-                <Badge variant={val === "Full-time" ? "success" : "warning"}>
-                  {String(val)}
-                </Badge>
-              )},
+              {
+                key: "type",
+                label: "Type",
+                render: (val) => (
+                  <Badge variant={val === "Full-time" ? "success" : "warning"}>
+                    {String(val)}
+                  </Badge>
+                ),
+              },
               {
                 key: "title",
                 label: "",
@@ -122,7 +173,7 @@ export default function JobsSection() {
                       setSelectedRole(String(val));
                       setDialogOpen(true);
                     }}
-                    style={{ color: "#E6007E" }}
+                    style={{ color: "#FF0080" }}
                   >
                     Apply
                   </Button>
@@ -136,59 +187,34 @@ export default function JobsSection() {
 
         <Divider spacing="lg" />
 
-        {/* Newsletter signup using TextInput */}
+        {/* Newsletter signup with TextInput */}
         <Box sx={{ mt: 5 }}>
-          <Typography
-            sx={{
-              fontSize: "1.1rem",
-              fontWeight: 600,
-              color: "#FFFFFF",
-              mb: 1,
-            }}
-          >
-            {"Don't see the right role?"}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "0.95rem",
-              color: "rgba(255,255,255,0.5)",
-              mb: 3,
-              maxWidth: 500,
-            }}
-          >
-            Join our talent community and be the first to know about new openings.
-          </Typography>
+          <SectionHeader
+            eyebrow="stay connected"
+            title="Don't see the right role?"
+            subtitle="Join our talent community and be the first to know about new openings."
+            variant="dark"
+          />
           <Box
             sx={{
               display: "flex",
               gap: 2,
               maxWidth: 500,
               flexDirection: { xs: "column", sm: "row" },
+              mt: 3,
               "& .MuiOutlinedInput-root": {
                 color: "#FFFFFF",
-                "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
-                "&:hover fieldset": { borderColor: "rgba(255,255,255,0.4)" },
-                "&.Mui-focused fieldset": { borderColor: "#E6007E" },
+                "& fieldset": { borderColor: "#3E444E" },
+                "&:hover fieldset": { borderColor: "#7B8FA1" },
+                "&.Mui-focused fieldset": { borderColor: "#FF0080" },
               },
-              "& .MuiInputLabel-root": {
-                color: "rgba(255,255,255,0.4)",
-              },
+              "& .MuiInputLabel-root": { color: "#7B8FA1" },
             }}
           >
-            <TextInput
-              label="Email address"
-              type="email"
-              size="small"
-            />
+            <TextInput label="Email address" type="email" size="small" />
             <Button
               variant="primary"
-              style={{
-                backgroundColor: "#E6007E",
-                color: "#FFFFFF",
-                border: "none",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-              }}
+              style={{ whiteSpace: "nowrap", flexShrink: 0 }}
             >
               Notify me
             </Button>
@@ -196,7 +222,7 @@ export default function JobsSection() {
         </Box>
       </Box>
 
-      {/* Application ConfirmDialog */}
+      {/* ConfirmDialog for job application */}
       <ConfirmDialog
         open={dialogOpen}
         title={`Apply for ${selectedRole}`}

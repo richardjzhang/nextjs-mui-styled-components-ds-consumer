@@ -21,14 +21,4 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Override DS Navbar to be transparent on the hero */
-.navbar-transparent .MuiAppBar-root,
-.navbar-transparent .MuiAppBar-colorPrimary,
-.navbar-transparent .MuiPaper-root,
-.navbar-transparent header[class*="MuiAppBar"] {
-  background-color: transparent !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  border-bottom: none !important;
-  border: none !important;
-}
+
