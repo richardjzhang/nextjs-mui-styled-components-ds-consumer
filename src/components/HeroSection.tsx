@@ -23,6 +23,7 @@ export default function HeroSection() {
         elevation={0}
         variant="dark"
       />
+      <StyledHero />
       <Alert
         severity="info"
         dismissible
@@ -30,7 +31,6 @@ export default function HeroSection() {
       >
         {"Now accepting applications for the 2026 Xccelerate cohort. Apply before March 31."}
       </Alert>
-      <StyledHero />
     </section>
   );
 }
