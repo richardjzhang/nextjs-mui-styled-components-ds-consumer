@@ -1,6 +1,5 @@
 "use client";
 
-import X15Navbar from "@/components/X15Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import MadeToScaleSection from "@/components/MadeToScaleSection";
@@ -11,7 +10,6 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <X15Navbar />
       <main>
         <HeroSection />
         <AboutSection />

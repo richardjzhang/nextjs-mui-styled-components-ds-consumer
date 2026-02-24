@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { Divider, Badge } from "@richardjzhang/design-system";
 
 export default function Footer() {
   return (
@@ -24,25 +25,30 @@ export default function Footer() {
           gap: 3,
         }}
       >
-        <Box>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              fontSize: "1.25rem",
-              color: "#FFFFFF",
-              mb: 1,
-            }}
-          >
-            x15ventures
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "0.85rem",
-              color: "rgba(255,255,255,0.35)",
-            }}
-          >
-            A venture scaler powered by CommBank
-          </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Box>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: "1.25rem",
+                color: "#FFFFFF",
+                mb: 0.5,
+              }}
+            >
+              x15ventures
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "0.85rem",
+                color: "rgba(255,255,255,0.35)",
+              }}
+            >
+              A venture scaler powered by CommBank
+            </Typography>
+          </Box>
+          <Badge variant="success" dot>
+            Active
+          </Badge>
         </Box>
 
         <Box
@@ -71,13 +77,15 @@ export default function Footer() {
         </Box>
       </Box>
 
+      <Box sx={{ maxWidth: 1200, mx: "auto", mt: 4 }}>
+        <Divider spacing="sm" />
+      </Box>
+
       <Box
         sx={{
           maxWidth: 1200,
           mx: "auto",
-          mt: 4,
-          pt: 3,
-          borderTop: "1px solid rgba(255,255,255,0.08)",
+          mt: 3,
         }}
       >
         <Typography

@@ -1,18 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Button, Divider } from "@richardjzhang/design-system";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {
+  Button,
+  DataTable,
+  Badge,
+  Divider,
+  TextInput,
+  ConfirmDialog,
+} from "@richardjzhang/design-system";
 
-const SAMPLE_ROLES = [
-  { title: "Software Engineer", team: "Ventures", location: "Sydney" },
-  { title: "Product Manager", team: "Core", location: "Sydney" },
-  { title: "Data Analyst", team: "Ventures", location: "Melbourne" },
-  { title: "UX Designer", team: "Core", location: "Sydney" },
+interface Role {
+  title: string;
+  team: string;
+  location: string;
+  type: string;
+}
+
+const SAMPLE_ROLES: Role[] = [
+  { title: "Software Engineer", team: "Ventures", location: "Sydney", type: "Full-time" },
+  { title: "Product Manager", team: "Core", location: "Sydney", type: "Full-time" },
+  { title: "Data Analyst", team: "Ventures", location: "Melbourne", type: "Full-time" },
+  { title: "UX Designer", team: "Core", location: "Sydney", type: "Contract" },
+  { title: "DevOps Engineer", team: "Ventures", location: "Remote", type: "Full-time" },
+  { title: "Growth Marketer", team: "Core", location: "Sydney", type: "Full-time" },
 ];
 
 export default function JobsSection() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+
+  const handleApply = () => {
+    setDialogOpen(false);
+    setEmail("");
+    setSelectedRole(null);
+  };
+
   return (
     <Box
       component="section"
@@ -48,66 +74,149 @@ export default function JobsSection() {
           {"We're always looking for talented people to help us build the future of banking. Explore open roles across our venture and core teams."}
         </Typography>
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 0 }}>
-          {SAMPLE_ROLES.map((role, i) => (
-            <Box key={role.title}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  py: 3,
-                  cursor: "pointer",
-                  transition: "opacity 0.2s",
-                  "&:hover": { opacity: 0.7 },
-                }}
-              >
-                <Box>
-                  <Typography
-                    sx={{
-                      fontWeight: 600,
-                      fontSize: "1.1rem",
-                      color: "#FFFFFF",
-                      mb: 0.5,
+        {/* Roles DataTable */}
+        <Box
+          sx={{
+            mb: 5,
+            "& .MuiPaper-root": {
+              bgcolor: "#222",
+              borderColor: "rgba(255,255,255,0.1)",
+            },
+            "& .MuiTableCell-root": {
+              color: "rgba(255,255,255,0.8)",
+              borderBottomColor: "rgba(255,255,255,0.08)",
+            },
+            "& .MuiTableCell-head": {
+              bgcolor: "#2a2a2a",
+              color: "rgba(255,255,255,0.5)",
+              fontWeight: 700,
+            },
+            "& .MuiTableRow-root:hover": {
+              bgcolor: "rgba(255,255,255,0.03) !important",
+            },
+          }}
+        >
+          <DataTable<Record<string, unknown>>
+            columns={[
+              { key: "title", label: "Role" },
+              { key: "team", label: "Team", render: (val) => (
+                <Badge variant={val === "Ventures" ? "info" : "default"}>
+                  {String(val)}
+                </Badge>
+              )},
+              { key: "location", label: "Location" },
+              { key: "type", label: "Type", render: (val) => (
+                <Badge variant={val === "Full-time" ? "success" : "warning"}>
+                  {String(val)}
+                </Badge>
+              )},
+              {
+                key: "title",
+                label: "",
+                align: "right" as const,
+                render: (val) => (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setSelectedRole(String(val));
+                      setDialogOpen(true);
                     }}
+                    style={{ color: "#E6007E" }}
                   >
-                    {role.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "0.9rem",
-                      color: "rgba(255,255,255,0.45)",
-                    }}
-                  >
-                    {role.team} &middot; {role.location}
-                  </Typography>
-                </Box>
-                <ArrowForwardIcon
-                  sx={{ color: "rgba(255,255,255,0.4)", fontSize: 20 }}
-                />
-              </Box>
-              {i < SAMPLE_ROLES.length - 1 && (
-                <Box sx={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }} />
-              )}
-            </Box>
-          ))}
+                    Apply
+                  </Button>
+                ),
+              },
+            ]}
+            rows={SAMPLE_ROLES.map((r) => ({ ...r } as Record<string, unknown>))}
+            rowKey="title"
+          />
         </Box>
 
+        <Divider spacing="lg" />
+
+        {/* Newsletter signup using TextInput */}
         <Box sx={{ mt: 5 }}>
-          <Button
-            variant="primary"
-            style={{
-              backgroundColor: "#E6007E",
+          <Typography
+            sx={{
+              fontSize: "1.1rem",
+              fontWeight: 600,
               color: "#FFFFFF",
-              border: "none",
-              padding: "14px 32px",
-              fontSize: "1rem",
+              mb: 1,
             }}
           >
-            View all open roles
-          </Button>
+            {"Don't see the right role?"}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: "0.95rem",
+              color: "rgba(255,255,255,0.5)",
+              mb: 3,
+              maxWidth: 500,
+            }}
+          >
+            Join our talent community and be the first to know about new openings.
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              maxWidth: 500,
+              flexDirection: { xs: "column", sm: "row" },
+              "& .MuiOutlinedInput-root": {
+                color: "#FFFFFF",
+                "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                "&:hover fieldset": { borderColor: "rgba(255,255,255,0.4)" },
+                "&.Mui-focused fieldset": { borderColor: "#E6007E" },
+              },
+              "& .MuiInputLabel-root": {
+                color: "rgba(255,255,255,0.4)",
+              },
+            }}
+          >
+            <TextInput
+              label="Email address"
+              type="email"
+              size="small"
+            />
+            <Button
+              variant="primary"
+              style={{
+                backgroundColor: "#E6007E",
+                color: "#FFFFFF",
+                border: "none",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+              }}
+            >
+              Notify me
+            </Button>
+          </Box>
         </Box>
       </Box>
+
+      {/* Application ConfirmDialog */}
+      <ConfirmDialog
+        open={dialogOpen}
+        title={`Apply for ${selectedRole}`}
+        description="Enter your email and we'll send you the full application form."
+        confirmLabel="Submit Application"
+        cancelLabel="Cancel"
+        confirmColor="primary"
+        onConfirm={handleApply}
+        onCancel={() => setDialogOpen(false)}
+      >
+        <Box sx={{ mt: 2 }}>
+          <TextInput
+            label="Your email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            size="small"
+          />
+        </Box>
+      </ConfirmDialog>
     </Box>
   );
 }

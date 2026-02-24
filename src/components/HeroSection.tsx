@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Button } from "@richardjzhang/design-system";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import X15Navbar from "./X15Navbar";
 
 export default function HeroSection() {
   const handleScroll = () => {
@@ -21,12 +22,9 @@ export default function HeroSection() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         backgroundImage: "url(/images/hero-bg.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        px: { xs: 3, md: 8 },
-        py: 8,
         overflow: "hidden",
       }}
     >
@@ -35,10 +33,15 @@ export default function HeroSection() {
         sx={{
           position: "absolute",
           inset: 0,
-          bgcolor: "rgba(35, 35, 40, 0.85)",
+          bgcolor: "rgba(45, 45, 50, 0.75)",
           zIndex: 0,
         }}
       />
+
+      {/* Navbar sitting inside the hero so it blends with dark bg */}
+      <Box sx={{ position: "relative", zIndex: 2 }}>
+        <X15Navbar />
+      </Box>
 
       {/* Large watermark text */}
       <Typography
@@ -62,7 +65,19 @@ export default function HeroSection() {
       </Typography>
 
       {/* Content */}
-      <Box sx={{ position: "relative", zIndex: 1, maxWidth: 900 }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 900,
+          px: { xs: 3, md: 8 },
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          pb: 8,
+        }}
+      >
         <Box
           sx={{
             bgcolor: "#FFFFFF",
@@ -75,14 +90,19 @@ export default function HeroSection() {
           <Typography
             variant="h1"
             sx={{
-              fontSize: { xs: "2rem", sm: "3rem", md: "4rem", lg: "4.5rem" },
+              fontSize: {
+                xs: "2rem",
+                sm: "3rem",
+                md: "4rem",
+                lg: "4.5rem",
+              },
               fontWeight: 400,
               color: "#1a1a1a",
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
             }}
           >
-            {"We're a venture scaler"}
+            {"We\u2019re a venture scaler"}
             <br />
             powered by CommBank
           </Typography>

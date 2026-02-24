@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Badge, TabPanel, Divider } from "@richardjzhang/design-system";
+import { Badge, TabPanel, Divider, Skeleton } from "@richardjzhang/design-system";
 
 interface Venture {
   name: string;
@@ -110,7 +110,7 @@ function VentureCard({ venture }: { venture: Venture }) {
       sx={{
         bgcolor: "#FFFFFF",
         border: "1px solid #E5E5E5",
-        borderRadius: 1,
+        borderRadius: "12px",
         p: 3,
         display: "flex",
         flexDirection: "column",
@@ -122,7 +122,13 @@ function VentureCard({ venture }: { venture: Venture }) {
         },
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
         <Typography
           variant="h6"
           sx={{ fontWeight: 700, color: "#1a1a1a", fontSize: "1.2rem" }}
@@ -141,11 +147,10 @@ function VentureCard({ venture }: { venture: Venture }) {
           {venture.category}
         </Badge>
       </Box>
-      <Typography
-        sx={{ fontSize: "0.85rem", color: "rgba(0,0,0,0.5)", fontWeight: 500 }}
-      >
+      <Badge variant="default" dot>
         {venture.year}
-      </Typography>
+      </Badge>
+      <Divider spacing="sm" />
       <Typography
         sx={{
           fontSize: "0.95rem",
@@ -159,7 +164,43 @@ function VentureCard({ venture }: { venture: Venture }) {
   );
 }
 
-function VentureGrid({ ventures }: { ventures: Venture[] }) {
+function VentureCardSkeleton() {
+  return (
+    <Box
+      sx={{
+        bgcolor: "#FFFFFF",
+        border: "1px solid #E5E5E5",
+        borderRadius: "12px",
+        p: 3,
+        display: "flex",
+        flexDirection: "column",
+        gap: 1.5,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Skeleton variant="text" width="60%" />
+        <Skeleton variant="rectangular" width={70} height={24} />
+      </Box>
+      <Skeleton variant="text" width="30%" />
+      <Divider spacing="sm" />
+      <Skeleton variant="text" lines={3} />
+    </Box>
+  );
+}
+
+function VentureGrid({
+  ventures,
+  loading,
+}: {
+  ventures: Venture[];
+  loading: boolean;
+}) {
   return (
     <Box
       sx={{
@@ -172,14 +213,23 @@ function VentureGrid({ ventures }: { ventures: Venture[] }) {
         gap: 3,
       }}
     >
-      {ventures.map((v) => (
-        <VentureCard key={v.name} venture={v} />
-      ))}
+      {loading
+        ? Array.from({ length: 3 }).map((_, i) => (
+            <VentureCardSkeleton key={i} />
+          ))
+        : ventures.map((v) => <VentureCard key={v.name} venture={v} />)}
     </Box>
   );
 }
 
 export default function PortfolioSection() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   const builtVentures = VENTURES.filter((v) => v.type === "built");
   const earlyVentures = VENTURES.filter((v) => v.type === "early");
   const xccelerateVentures = VENTURES.filter((v) => v.type === "xccelerate");
@@ -189,7 +239,7 @@ export default function PortfolioSection() {
       component="section"
       id="portfolio"
       sx={{
-        bgcolor: "#FAFAFA",
+        bgcolor: "#FFFFFF",
         py: { xs: 8, md: 12 },
         px: { xs: 3, md: 8 },
       }}
@@ -231,7 +281,11 @@ export default function PortfolioSection() {
               {"Built & owned ventures"}
             </Typography>
             <Typography
-              sx={{ fontSize: "0.9rem", color: "rgba(0,0,0,0.55)", lineHeight: 1.6 }}
+              sx={{
+                fontSize: "0.9rem",
+                color: "rgba(0,0,0,0.55)",
+                lineHeight: 1.6,
+              }}
             >
               Wholly-owned startups we have either built and launched, or
               acquired.
@@ -249,10 +303,14 @@ export default function PortfolioSection() {
               Early-stage investments
             </Typography>
             <Typography
-              sx={{ fontSize: "0.9rem", color: "rgba(0,0,0,0.55)", lineHeight: 1.6 }}
+              sx={{
+                fontSize: "0.9rem",
+                color: "rgba(0,0,0,0.55)",
+                lineHeight: 1.6,
+              }}
             >
-              Pre-Series B startups with a clear benefit to CommBank, demonstrating
-              readiness for strategic partnership commitments.
+              Pre-Series B startups with a clear benefit to CommBank,
+              demonstrating readiness for strategic partnership commitments.
             </Typography>
           </Box>
           <Box sx={{ textAlign: "center" }}>
@@ -267,7 +325,11 @@ export default function PortfolioSection() {
               Xccelerate investments
             </Typography>
             <Typography
-              sx={{ fontSize: "0.9rem", color: "rgba(0,0,0,0.55)", lineHeight: 1.6 }}
+              sx={{
+                fontSize: "0.9rem",
+                color: "rgba(0,0,0,0.55)",
+                lineHeight: 1.6,
+              }}
             >
               Pre-Series A startups with an MVP and potential pathway to
               partnership with CommBank.
@@ -307,15 +369,21 @@ export default function PortfolioSection() {
           tabs={[
             {
               label: "Built & Owned",
-              content: <VentureGrid ventures={builtVentures} />,
+              content: (
+                <VentureGrid ventures={builtVentures} loading={loading} />
+              ),
             },
             {
               label: "Early-Stage",
-              content: <VentureGrid ventures={earlyVentures} />,
+              content: (
+                <VentureGrid ventures={earlyVentures} loading={loading} />
+              ),
             },
             {
               label: "Xccelerate",
-              content: <VentureGrid ventures={xccelerateVentures} />,
+              content: (
+                <VentureGrid ventures={xccelerateVentures} loading={loading} />
+              ),
             },
           ]}
         />

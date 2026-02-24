@@ -11,5 +11,9 @@ const NAV_ITEMS = [
 ];
 
 export default function X15Navbar() {
-  return <Navbar title="x15ventures" items={NAV_ITEMS} elevation={0} />;
+  return (
+    <div className="navbar-transparent">
+      <Navbar title="x15ventures" items={NAV_ITEMS} elevation={0} />
+    </div>
+  );
 }

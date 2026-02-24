@@ -2,7 +2,16 @@
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Button } from "@richardjzhang/design-system";
+import { Button, Avatar, Divider } from "@richardjzhang/design-system";
+
+const TEAM_MEMBERS = [
+  { name: "Toby Norton-Smith", role: "CEO" },
+  { name: "Georgia Harper", role: "COO" },
+  { name: "James Chen", role: "CTO" },
+  { name: "Sarah Mitchell", role: "Head of Ventures" },
+  { name: "David Park", role: "Head of Investments" },
+  { name: "Priya Sharma", role: "Head of Product" },
+];
 
 export default function MadeToScaleSection() {
   return (
@@ -12,7 +21,7 @@ export default function MadeToScaleSection() {
       sx={{
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
-        minHeight: { xs: "auto", md: "80vh" },
+        minHeight: { xs: "auto", md: "auto" },
       }}
     >
       {/* Left - Image */}
@@ -20,7 +29,7 @@ export default function MadeToScaleSection() {
         sx={{
           flex: 1,
           position: "relative",
-          minHeight: { xs: 300, md: "auto" },
+          minHeight: { xs: 300, md: 600 },
         }}
       >
         <Box
@@ -31,7 +40,7 @@ export default function MadeToScaleSection() {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            position: { md: "absolute" },
+            position: "absolute",
             inset: 0,
           }}
         />
@@ -86,24 +95,55 @@ export default function MadeToScaleSection() {
           {"We're human. Real people, getting stuck in and doing the work. We come together as a team to drive and deliver new ideas, capability, and innovations that'll help shape the bank of the future."}
         </Typography>
 
-        <Typography
-          sx={{
-            fontSize: "0.95rem",
-            color: "rgba(255,255,255,0.5)",
-            mb: 3,
-          }}
-        >
-          Discover how you can scale your impact as a part of our venture or
-          core teams.
-        </Typography>
+        {/* Leadership Team with Avatar */}
+        <Box sx={{ mb: 4 }}>
+          <Divider label="Leadership" spacing="md" />
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 2,
+              mt: 3,
+            }}
+          >
+            {TEAM_MEMBERS.map((member) => (
+              <Box
+                key={member.name}
+                sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
+              >
+                <Avatar name={member.name} size="sm" />
+                <Box>
+                  <Typography
+                    sx={{
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
+                      color: "#FFFFFF",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {member.name}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "0.75rem",
+                      color: "rgba(255,255,255,0.45)",
+                    }}
+                  >
+                    {member.role}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
 
         <Box>
           <Button
             variant="outline"
+            size="lg"
             style={{
               borderColor: "#FFFFFF",
               color: "#FFFFFF",
-              padding: "12px 28px",
             }}
           >
             Working at x15
