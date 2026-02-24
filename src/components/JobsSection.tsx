@@ -162,15 +162,15 @@ export default function JobsSection() {
                 ),
               },
               {
-                key: "title",
+                key: "action",
                 label: "",
                 align: "right" as const,
-                render: (val) => (
+                render: (_val, row) => (
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => {
-                      setSelectedRole(String(val));
+                      setSelectedRole(String(row?.title ?? ""));
                       setDialogOpen(true);
                     }}
                     style={{ color: "#FF0080" }}
