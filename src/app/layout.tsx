@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "x15ventures | Venture Scaler Powered by CommBank",
+  title: "x15ventures | Venture Scaler Powered by CBA",
   description:
     "We build, buy, and invest in startups that would benefit from connections to Australia's leading bank, and could improve the lives of its 15 million customers.",
 };
