@@ -36,19 +36,19 @@ export default function ValuesSection() {
           <IconCard
             icon={<RocketLaunchIcon sx={{ fontSize: 40 }} />}
             title="Build & Launch"
-            description="We ideate, validate, and build new digital ventures from scratch, leveraging CommBank's customer base and data insights."
+            description="We ideate, validate, and build new digital ventures from scratch, leveraging CBA's customer base and data insights."
             variant="dark"
           />
           <IconCard
             icon={<GroupsIcon sx={{ fontSize: 40 }} />}
             title="Invest & Partner"
-            description="We invest in early-stage startups that align with CommBank's strategic priorities and can benefit from our distribution capabilities."
+            description="We invest in early-stage startups that align with CBA's strategic priorities and can benefit from our distribution capabilities."
             variant="dark"
           />
           <IconCard
             icon={<TrendingUpIcon sx={{ fontSize: 40 }} />}
             title="Scale & Grow"
-            description="We help ventures scale by connecting them with CommBank's 15 million customers, brand trust, and regulatory expertise."
+            description="We help ventures scale by connecting them with CBA's 15 million customers, brand trust, and regulatory expertise."
             variant="dark"
           />
         </Box>

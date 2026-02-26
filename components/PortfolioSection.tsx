@@ -60,7 +60,7 @@ const VENTURES = {
       year: "2023",
       category: "Business",
       description:
-        "Waddle's invoice lending platform powers CommBank's Stream Working Capital product for small business owners.",
+        "Waddle's invoice lending platform powers CBA's Stream Working Capital product for small business owners.",
       brandColor: "#2B3039",
     },
     {
@@ -200,7 +200,7 @@ export default function PortfolioSection() {
           <SectionHeader
             eyebrow="our ventures"
             title="Built to improve lives"
-            subtitle="We're helping CommBank reimagine what it means to be a bank, with products and services that improve people's lives."
+            subtitle="We're helping CBA reimagine what it means to be a bank, with products and services that improve people's lives."
           />
 
           {/* Chip category filters */}

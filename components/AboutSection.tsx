@@ -30,7 +30,7 @@ export default function AboutSection() {
           <SectionHeader
             eyebrow="x15 by the numbers"
             title="Impact at scale"
-            subtitle="Driving outcomes for CommBank's 15 million customers and the Australian startup ecosystem."
+            subtitle="Driving outcomes for CBA's 15 million customers and the Australian startup ecosystem."
             align="center"
           />
           <Divider spacing="lg" />
@@ -55,7 +55,7 @@ export default function AboutSection() {
             <StatCard
               label="Customers Reached"
               value="15M+"
-              change="Through CommBank"
+              change="Through CBA"
               trend="up"
             />
             <StatCard
