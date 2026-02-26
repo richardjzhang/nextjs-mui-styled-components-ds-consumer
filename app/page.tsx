@@ -14,7 +14,7 @@ import {
   CTABanner,
 } from "@richardjzhang/design-system";
 
-export default function Home() {
+export default function Home(): React.JSX.Element {
   return (
     <>
       <main>
